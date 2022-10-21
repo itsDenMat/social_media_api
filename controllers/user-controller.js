@@ -31,5 +31,10 @@ const userController = {
         });
     },
 
+// Create user
+// Update user
+// Delete user
+// Add friend
+// Remove friend
 
 };
