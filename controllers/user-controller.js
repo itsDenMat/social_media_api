@@ -31,7 +31,17 @@ const userController = {
         });
     },
 
-// Create user
+    createNewUser(req,res) {
+        User.create(req.body)
+        .then((dbUserData) => {
+            res.json(dbUserData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
+
 // Update user
 // Delete user
 // Add friend
