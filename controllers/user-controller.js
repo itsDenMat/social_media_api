@@ -14,7 +14,7 @@ const userController = {
         });
     },
 
-    getSingleUser(req, res) {
+    getOneUser(req, res) {
         User.findOne({ _id: req.params.userId })
         .select('-__v')
         .populate('friends')
@@ -42,7 +42,7 @@ const userController = {
         });
     },
 
-// Update user
+
 // Delete user
 // Add friend
 // Remove friend
