@@ -29,4 +29,4 @@ const reactionSchema = new Schema (
     }
 );
 
-module.exports = reawctionSchema;
+module.exports = reactionSchema;
