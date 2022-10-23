@@ -3,6 +3,7 @@ const addDateSuffix = date => {
 
     const lastChar = dateStr.charAt(dateStr.length - 1);
 
+    // If statement to determine if date needs "st", "nd", or "th" at the end of each day
     if (lastChar === '1' && dateStr !== '11') {
         dateStr = `${dateStr}st`;
     } else if (lastChar === '2' && dateStr !== '12') {
@@ -16,6 +17,7 @@ const addDateSuffix = date => {
     return dateStr;
 };
 
+// Function to figure out what format to use on timestamp,to use either short or long months
 module.exports = (
     timestamp,
     { monthLength = 'short', dateSuffix = true } = {}
@@ -68,11 +70,13 @@ module.exports = (
     const year = dateObj.getFullYear();
 
     let hour;
+    // Checking for 24 hour time span
     if (dateObj.getHours > 12) {
         hour = Math.floor(dateObj.getHours() / 2);
     } else {
         hour = dateObj.getHours();
     }
+    // Once time reaches midnight, it will print 12
     if (hour === 0) {
         hour = 12;
     }
