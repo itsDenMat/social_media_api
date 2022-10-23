@@ -45,14 +45,14 @@ const userController = {
     updateUser(req, res) {
         User.findOneAndUpdate(
             {
-                _id: req.params.userId,
+                _id: req.params.userId
             },
             {
-                $set: req.body,
+                $set: req.body
             },
             {
                 runValidators: true,
-                new: true,
+                new: true
             }
         )
         .then((dbUserData) => {
@@ -71,7 +71,31 @@ const userController = {
         User.findOneAndDelete({ _id: req.params.userId })
         .then((dbUserData) => {
             if(!dbUserData) {
-                return res.status(404).json({ message: 'UserID is not valid!' });
+                return res.status(404).json({ message: 'User ID is not valid!' });
+            }
+            res.json(dbUserData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
+
+    addFriend(req, res) {
+        User.findOneAndUpdate(
+            {
+                _id: req.params.userId
+            },
+            {
+                $aaddToSet: { friends: req.params.friendId }
+            },
+            {
+                new: true
+            },
+        )
+        .then((dbUserData) => {
+            if(!dbUserData) {
+                return res.status(400).json({ message: 'Friend ID is not valid!' });
             }
             res.json(dbUserData);
         })
@@ -81,7 +105,6 @@ const userController = {
         });
     },
     
-// Add friend
 // Remove friend
 
 };
