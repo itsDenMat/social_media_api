@@ -30,19 +30,20 @@ const thoughtController = {
     // Create a new thought and push it to the user that it is associated with
     createThought(req, res) {
         Thought.create(req.body)
-        .then((dbThoughtData) => {
-            return User.findOneAndUpdate(
-                {
-                    _id: req.body.userId
-                },
-                {
-                    $push: { thoughts: dbThoughtData._id }
-                },
-                {
-                    new: true
-                }
-            );
-        }).then((dbUserData) => {
+        // .then((dbThoughtData) => {
+        //     return User.findOneAndUpdate(
+        //         {
+        //             _id: req.body.userId
+        //         },
+        //         {
+        //             $push: { thoughts: dbThoughtData._id }
+        //         },
+        //         {
+        //             new: true
+        //         }
+        //     );
+        // })
+        .then((dbUserData) => {
             if(!dbUserData) {
                 return res.satus(404).json({ message: 'User ID is not valid!'});
             }
