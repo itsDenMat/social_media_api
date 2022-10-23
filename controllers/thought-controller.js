@@ -42,8 +42,8 @@ const thoughtController = {
                 }
             );
         })
-        .then((dbUserDate) => {
-            if(!dbUserDate) {
+        .then((dbUserData) => {
+            if(!dbUserData) {
                 return res.satus(404).json({ message: 'Thought created with no user!'});
             }
             res.json({ message: 'Sucessfully created thought!' });
@@ -72,6 +72,36 @@ const thoughtController = {
                 return res.status(404).json({ message: 'Thought not found'});
             }
             res.json(dbThoughtData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
+
+    deleteThought(req, res) {
+        Thought.findOneAndRemove({ _id: req.params.thoughtId })
+        .then((dbThoughtData) => {
+            if(!dbThoughtData) {
+                return res.status(404).json({ message: 'Thought not found!'});
+            }
+            return User.findOneAndUpdate(
+                {
+                    thoughts: req.params.thoughtId
+                },
+                {
+                    $pull: { thoughts: req.params.thoughtId }
+                },
+                {
+                    new: true
+                }
+            );
+        })
+        .then((dbUserData) => {
+            if(!dbUserData) {
+                return res.status(404).json({ message: 'Thought created with no user!'});
+            }
+            res.json({ message: 'Successfully deleted thought!'});
         })
         .catch((err) => {
             console.log(err);
