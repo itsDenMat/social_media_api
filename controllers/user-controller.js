@@ -66,8 +66,21 @@ const userController = {
             res.status(500).json(err);
         });
     },
+
+    deleteUser(req, res) {
+        User.findOneAndDelete({ _id: req.params.userId })
+        .then((dbUserData) => {
+            if(!dbUserData) {
+                return res.status(404).json({ message: 'UserID is not valid!' });
+            }
+            res.json(dbUserData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
     
-// Delete user
 // Add friend
 // Remove friend
 
