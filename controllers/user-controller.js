@@ -104,7 +104,30 @@ const userController = {
             res.status(500).json(err);
         });
     },
-    
-// Remove friend
 
+    removeFriend(req, res) {
+        User.FineOneAndUpdate(
+            {
+                _id: req.params.userId
+            },
+            {
+                $pull: { friends: req.params.friendId }
+            },
+            {
+                new: true
+            }
+        )
+        .then((dbUserData) => {
+            if(!dbUserData) {
+                return res.status(404).json({ message: 'Friend ID is not valid!' });
+            }
+            res.json(dbUserData);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    },
 };
+
+module.exports = userController;
