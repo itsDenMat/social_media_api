@@ -72,7 +72,10 @@ const userController = {
             if(!dbUserData) {
                 return res.status(404).json({ message: 'User ID is not valid!' });
             }
-            res.json(dbUserData);
+
+            return Thought.deleteMany({ _id: { $in: dbUserData.thoughts} });
+        }).then(() => {
+            res.json({ message: 'User and thoughts associated with the user were successfully deleted!'});
         }).catch((err) => {
             console.log(err);
             res.status(500).json(err);
